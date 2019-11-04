@@ -1,6 +1,6 @@
 
-import java.io.Console;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,17 +23,11 @@ import unsw.dungeon.entity.meta.Entity;
 // m e m e s
 
 public class DungeonConsole {
-	public static void main(String[] args) throws IOException {
-
-//		String mapName = getMapNameLoop(args.length == 0 ? "" : args[0].strip());
-//		System.out.println(String.format("Selected \"%s\"", mapName));
-		DungeonLoader loader = new DungeonLoader("advanced.json");
-		Dungeon dungeon = loader.load();
+	private void redraw() {
+		clearScreen();
 
 		int width = dungeon.getWidth();
 		int height = dungeon.getHeight();
-
-		Console c = System.console();
 
 		char[][] z = new char[height][width]; // y,x
 		for (int i = 0; i < height; i++) {
@@ -60,14 +54,65 @@ public class DungeonConsole {
 		for (int i = 0; i < height; i++) {
 			System.out.println(z[i]);
 		}
+
+	}
+
+	private static void clearScreen() {
+		System.out.print("\033[H\033[2J");
+		System.out.flush();
+	}
+
+	private Dungeon dungeon;
+
+	private void initialise() throws FileNotFoundException {
+		DungeonLoader loader = new DungeonLoader("advanced.json");
+		dungeon = loader.load();
+	}
+
+	public static void main(String[] args) throws IOException {
+		DungeonConsole game = new DungeonConsole();
+		game.initialise();
+		game.redraw();
+//		String mapName = getMapNameLoop(args.length == 0 ? "" : args[0].strip());
+//		System.out.println(String.format("Selected \"%s\"", mapName));
+
+		Player player = game.dungeon.getPlayer();
+
 		KeyReader keyInput = new KeyReader();
 		while (true) {
-			KeyCode code = keyInput.read();
-			if (code == KeyCode.CANCEL) {
+			KeyCode key = keyInput.read();
+			switch (key) {
+
+			case CANCEL:
 				System.exit(0);
-			} else {
-				System.out.println(code);
+				break;
+
+			case W:
+			case UP:
+				player.moveUp();
+				break;
+
+			case S:
+			case DOWN:
+				player.moveDown();
+				break;
+
+			case A:
+			case LEFT:
+				player.moveLeft();
+				break;
+
+			case D:
+			case RIGHT:
+				player.moveRight();
+				break;
+
+			default:
+				System.out.println(key);
+
 			}
+
+			game.redraw();
 		}
 	}
 
