@@ -10,8 +10,12 @@ import java.util.Scanner;
 import javafx.scene.input.KeyCode;
 import unsw.dungeon.Dungeon;
 import unsw.dungeon.DungeonLoader;
+import unsw.dungeon.entity.Enemy;
+import unsw.dungeon.entity.InvincibilityPotion;
 import unsw.dungeon.entity.Player;
 import unsw.dungeon.entity.Portal;
+import unsw.dungeon.entity.Sword;
+import unsw.dungeon.entity.Treasure;
 import unsw.dungeon.entity.Wall;
 import unsw.dungeon.entity.meta.Entity;
 
@@ -37,6 +41,10 @@ public class DungeonConsole {
 		}
 
 		for (Entity e : dungeon.getEntities()) {
+			if (!e.getVisibility()) {
+				continue;
+			}
+
 			char symbol = '?';
 			{
 				if (e instanceof Wall) {
@@ -45,13 +53,23 @@ public class DungeonConsole {
 					symbol = '\u25EF';
 				} else if (e instanceof Player) {
 					symbol = '\u00B7';
+				} else if (e instanceof Sword) {
+					symbol = 'S';
+				} else if (e instanceof Enemy) {
+					symbol = 'E';
+				} else if (e instanceof Treasure) {
+					symbol = '$';
+				} else if (e instanceof InvincibilityPotion) {
+					symbol = 'P';
 				}
 			}
 
 			z[e.getY()][e.getX()] = symbol;
 		}
 
-		for (int i = 0; i < height; i++) {
+		for (
+
+				int i = 0; i < height; i++) {
 			System.out.println(z[i]);
 		}
 
