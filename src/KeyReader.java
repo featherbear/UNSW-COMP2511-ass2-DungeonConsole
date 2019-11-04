@@ -39,9 +39,28 @@ public class KeyReader {
 				case 91:
 					break;
 				default:
-					System.out.println(ch);
-					return KeyCode.A;
+					switch (ch) {
+					case 119:
+					case 87:
+						return KeyCode.W;
+
+					case 115:
+					case 83:
+						return KeyCode.S;
+
+					case 97:
+					case 65:
+						return KeyCode.A;
+
+					case 100:
+					case 68:
+						return KeyCode.D;
+
+					default:
+						System.out.println(ch);
+						return KeyCode.UNDEFINED;
 //					return KeyCode.getKeyCode(Character.toString((char) ch).toUpperCase());
+					}
 				}
 
 				break;
