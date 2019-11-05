@@ -18,8 +18,8 @@ import javafx.scene.input.KeyCode;
 public class DungeonConsole {
 
 	public static void main(String[] args) throws IOException {
-		System.out.println("Dungeon Console");
-		System.out.println("The COMP2511 assignment but in a text-based version that no one asked for...\n");
+		System.out.println("| Dungeon Console |");
+		System.out.println("// The COMP2511 assignment but in a text-based version that no one asked for...\n");
 
 		// Get maps
 		String mapName = getMapNameLoop(args.length == 0 ? "" : args[0].strip());
@@ -111,7 +111,8 @@ public class DungeonConsole {
 			System.out.println("======== MAPS ========");
 			levels.forEach(f -> System.out.println("- " + f));
 			System.out.println("======================");
-			System.out.print("Enter a map name\n> ");
+			System.out.println("\nEnter a map name");
+			System.out.print("> ");
 			input = sc.nextLine().strip();
 		}
 
