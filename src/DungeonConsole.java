@@ -1,6 +1,5 @@
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,16 +7,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import javafx.scene.input.KeyCode;
-import unsw.dungeon.Dungeon;
-import unsw.dungeon.DungeonLoader;
-import unsw.dungeon.entity.Enemy;
-import unsw.dungeon.entity.InvincibilityPotion;
-import unsw.dungeon.entity.Player;
-import unsw.dungeon.entity.Portal;
-import unsw.dungeon.entity.Sword;
-import unsw.dungeon.entity.Treasure;
-import unsw.dungeon.entity.Wall;
-import unsw.dungeon.entity.meta.Entity;
 
 /**
  * @author z5206677
@@ -27,50 +16,78 @@ import unsw.dungeon.entity.meta.Entity;
 // m e m e s
 
 public class DungeonConsole {
-	private void redraw() {
+
+	public static void main(String[] args) throws IOException {
+		System.out.println("Dungeon Console");
+		System.out.println("The COMP2511 assignment but in a text-based version that no one asked for...\n");
+
+		// Get maps
+		String mapName = getMapNameLoop(args.length == 0 ? "" : args[0].strip());
+		System.out.println(String.format("Selected \"%s\"", mapName));
+
+		// Load game controller
+		GameController controller = new GameController(mapName);
+
+		controller.initialise();
+		redraw(controller);
+
+		KeyReader keyInput = new KeyReader();
+		// Listen to keyboard events
+
+		while (true) {
+			KeyCode key = keyInput.read();
+			switch (key) {
+
+			case CANCEL:
+			case DELETE:
+				System.exit(0);
+				break;
+
+			case W:
+			case UP:
+				controller.moveUp();
+				break;
+
+			case S:
+			case DOWN:
+				controller.moveDown();
+				break;
+
+			case A:
+			case LEFT:
+				controller.moveLeft();
+				break;
+
+			case D:
+			case RIGHT:
+				controller.moveRight();
+				break;
+
+			case R:
+				controller.initialise();
+
+			default:
+				System.out.println(key);
+
+			}
+
+			redraw(controller);
+		}
+	}
+
+	private static void redraw(GameController controller) {
+		// Clear the screen first
 		clearScreen();
 
-		int width = dungeon.getWidth();
-		int height = dungeon.getHeight();
-
-		char[][] z = new char[height][width]; // y,x
-		for (int i = 0; i < height; i++) {
-			for (int j = 0; j < width; j++) {
-				z[i][j] = ' ';
-			}
+		// Print out the entities - We can print an array of characters as a String
+		char[][] view = controller.getView();
+		for (int i = 0; i < view.length; i++) {
+			System.out.println(view[i]);
 		}
 
-		for (Entity e : dungeon.getEntities()) {
-			if (!e.getVisibility()) {
-				continue;
-			}
-
-			char symbol = '?';
-			{
-				if (e instanceof Wall) {
-					symbol = '\u25A0';
-				} else if (e instanceof Portal) {
-					symbol = '\u25EF';
-				} else if (e instanceof Player) {
-					symbol = '\u00B7';
-				} else if (e instanceof Sword) {
-					symbol = 'S';
-				} else if (e instanceof Enemy) {
-					symbol = 'E';
-				} else if (e instanceof Treasure) {
-					symbol = '$';
-				} else if (e instanceof InvincibilityPotion) {
-					symbol = 'P';
-				}
-			}
-
-			z[e.getY()][e.getX()] = symbol;
-		}
-
-		for (
-
-				int i = 0; i < height; i++) {
-			System.out.println(z[i]);
+		for (String line : new String[] { "", "=== CONTROLS ===", "W / UP - Move Up", "S / DOWN - Move Down",
+				"A / LEFT - Move Left", "D / RIGHT - Move Right", "R - Restart", "DELETE - Exit" }) {
+			System.out.println(line);
 		}
 
 	}
@@ -80,63 +97,10 @@ public class DungeonConsole {
 		System.out.flush();
 	}
 
-	private Dungeon dungeon;
-
-	private void initialise() throws FileNotFoundException {
-		DungeonLoader loader = new DungeonLoader("advanced.json");
-		dungeon = loader.load();
-	}
-
-	public static void main(String[] args) throws IOException {
-		DungeonConsole game = new DungeonConsole();
-		game.initialise();
-		game.redraw();
-//		String mapName = getMapNameLoop(args.length == 0 ? "" : args[0].strip());
-//		System.out.println(String.format("Selected \"%s\"", mapName));
-
-		Player player = game.dungeon.getPlayer();
-
-		KeyReader keyInput = new KeyReader();
-		while (true) {
-			KeyCode key = keyInput.read();
-			switch (key) {
-
-			case CANCEL:
-				System.exit(0);
-				break;
-
-			case W:
-			case UP:
-				player.moveUp();
-				break;
-
-			case S:
-			case DOWN:
-				player.moveDown();
-				break;
-
-			case A:
-			case LEFT:
-				player.moveLeft();
-				break;
-
-			case D:
-			case RIGHT:
-				player.moveRight();
-				break;
-
-			default:
-				System.out.println(key);
-
-			}
-
-			game.redraw();
-		}
-	}
-
 	public static String getMapNameLoop(String input) {
 		List<String> levels = getLevels();
 
+		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(System.in);
 
 		while (!levels.contains(input)) {
@@ -151,14 +115,12 @@ public class DungeonConsole {
 			input = sc.nextLine().strip();
 		}
 
-		sc.close();
-		return input;
-	}
+		/*
+		 * Don't close the Scanner, else we get a java.io.IOException: Stream closed //
+		 * // sc.close();
+		 */
 
-	public static Dungeon createDungeon(File level) {
-		System.out.println(level);
-//		new DungeonLoader()
-		return null;
+		return input;
 	}
 
 	public static List<String> getLevels() {
@@ -179,8 +141,4 @@ public class DungeonConsole {
 		return levelFiles;
 
 	}
-
-//	public static String promptLevel() {
-//
-//	}
 }

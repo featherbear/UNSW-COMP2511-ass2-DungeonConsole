@@ -56,6 +56,13 @@ public class KeyReader {
 					case 68:
 						return KeyCode.D;
 
+					case 82:
+					case 114:
+						return KeyCode.R;
+
+					case 126:
+						return KeyCode.DELETE;
+
 					default:
 						System.out.println(ch);
 						return KeyCode.UNDEFINED;
