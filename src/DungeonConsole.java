@@ -16,6 +16,13 @@ import javafx.scene.input.KeyCode;
 // m e m e s
 
 public class DungeonConsole {
+	private static void exit(int exitCode) {
+		System.exit(exitCode);
+	}
+
+	private static void exit() {
+		exit(0);
+	}
 
 	public static void main(String[] args) throws IOException {
 		System.out.println("| Dungeon Console |");
@@ -40,7 +47,7 @@ public class DungeonConsole {
 
 			case CANCEL:
 			case DELETE:
-				System.exit(0);
+				exit();
 				break;
 
 			case W:
@@ -100,6 +107,11 @@ public class DungeonConsole {
 	public static String getMapNameLoop(String input) {
 		List<String> levels = getLevels();
 
+		if (levels.size() == 0) {
+			System.out.println("No maps located in `dungeons`!");
+			exit(0);
+		}
+
 		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(System.in);
 
@@ -127,6 +139,15 @@ public class DungeonConsole {
 	public static List<String> getLevels() {
 		// your directory
 		File f = new File("dungeons");
+		if (!f.exists()) {
+			System.out.println("`dungeons` directory does not exist!");
+			exit(1);
+		}
+		if (!f.isDirectory()) {
+			System.out.println("`dungeons` is not a directory!");
+			exit(1);
+		}
+
 		File[] matchingFiles = f.listFiles(new FilenameFilter() {
 			@Override
 			public boolean accept(File dir, String name) {
