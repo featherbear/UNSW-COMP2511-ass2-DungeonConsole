@@ -23,7 +23,7 @@ Well lucky that's not me! But alas here I am making a text-based frontend for th
 
 ## Development
 
-Well uh, this project probably won't work with your code unless you modify a lot of things. ¯\_(ツ)_/¯  
+Well uh, this project probably won't work with your code unless you modify a lot of things. ¯\\_(ツ)_/¯  
 
 `./compile.sh` -> Compile the program (pack into DungeonConsole.jar)  
 `./run.sh` -> Compile and run  
