@@ -40,3 +40,4 @@ echo Cleaning up...
 cd ..
 rm -rf tmp
 
+echo DungeonConsole.jar created!
