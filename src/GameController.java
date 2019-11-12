@@ -2,10 +2,15 @@ import java.io.FileNotFoundException;
 
 import unsw.dungeon.Dungeon;
 import unsw.dungeon.DungeonLoader;
+import unsw.dungeon.entity.Boulder;
+import unsw.dungeon.entity.Door;
 import unsw.dungeon.entity.Enemy;
+import unsw.dungeon.entity.Exit;
 import unsw.dungeon.entity.InvincibilityPotion;
+import unsw.dungeon.entity.Key;
 import unsw.dungeon.entity.Player;
 import unsw.dungeon.entity.Portal;
+import unsw.dungeon.entity.Switch;
 import unsw.dungeon.entity.Sword;
 import unsw.dungeon.entity.Treasure;
 import unsw.dungeon.entity.Wall;
@@ -13,6 +18,8 @@ import unsw.dungeon.entity.meta.Entity;
 import unsw.dungeon.entity.meta.EntityLevel;
 
 public class GameController {
+	private static final char backgroundTile = ' ';
+
 	private DungeonLoader loader;
 	private Dungeon dungeon;
 	private Player player;
@@ -34,15 +41,27 @@ public class GameController {
 		} else if (e instanceof Player) {
 			return '\u00B7';
 		} else if (e instanceof Sword) {
-			return 'S';
+			return '\u2694';
 		} else if (e instanceof Enemy) {
-			return 'E';
+			return 'X';
 		} else if (e instanceof Treasure) {
 			return '$';
 		} else if (e instanceof InvincibilityPotion) {
 			return 'P';
+		} else if (e instanceof Switch) {
+			return 'S';
+		} else if (e instanceof Boulder) {
+			return 'B';
+		} else if (e instanceof Key) {
+			return 'K';
+		} else if (e instanceof Door) {
+			if (!((Door) e).getOpen()) {
+				return '\u29BC';
+			}
+		} else if (e instanceof Exit) {
+			return '\u00d8';
 		}
-		return '?';
+		return backgroundTile;
 	}
 
 	public void initialise() {
@@ -91,13 +110,13 @@ public class GameController {
 		char[][] view = new char[height][width]; // y,x
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
-				view[i][j] = ' ';
+				view[i][j] = backgroundTile;
 			}
 		}
 
 		for (EntityLevel entityLevel : EntityLevel.values()) {
 			for (Entity e : Entity.filter(dungeon.getEntities(), entityLevel)) {
-				if (view[e.getY()][e.getX()] != ' ') {
+				if (view[e.getY()][e.getX()] != backgroundTile) {
 					continue;
 				}
 
