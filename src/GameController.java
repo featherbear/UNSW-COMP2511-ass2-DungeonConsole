@@ -79,6 +79,8 @@ public class GameController {
 			view[e.getY()][e.getX()] = entityToChar(e);
 		}
 
+		view[player.getY()][player.getX()] = entityToChar(player);
+
 		return view;
 	}
 
