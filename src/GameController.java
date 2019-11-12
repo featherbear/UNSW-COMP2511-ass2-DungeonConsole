@@ -17,8 +17,13 @@ public class GameController {
 	private Dungeon dungeon;
 	private Player player;
 
+	private boolean hasWon;
+	private boolean hasLost;
+
 	public GameController(String mapFile) throws FileNotFoundException {
 		loader = new DungeonLoader(mapFile);
+		this.hasWon = false;
+		this.hasLost = false;
 	}
 
 	private char entityToChar(Entity e) {
@@ -43,6 +48,24 @@ public class GameController {
 	public void initialise() {
 		dungeon = loader.load();
 		player = dungeon.getPlayer();
+
+		dungeon.finishEvent.register(() -> {
+			this.hasWon = true;
+		});
+		dungeon.playerDeadEvent.register(() -> {
+			this.hasLost = true;
+		});
+
+		this.hasWon = false;
+		this.hasLost = false;
+	}
+
+	public boolean hasWon() {
+		return this.hasWon;
+	}
+
+	public boolean hasLost() {
+		return this.hasLost;
 	}
 
 	public void moveUp() {

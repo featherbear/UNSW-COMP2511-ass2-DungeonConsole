@@ -92,9 +92,22 @@ public class DungeonConsole {
 			System.out.println(view[i]);
 		}
 
-		for (String line : new String[] { "", "=== CONTROLS ===", "W / UP - Move Up", "S / DOWN - Move Down",
-				"A / LEFT - Move Left", "D / RIGHT - Move Right", "R - Restart", "DELETE - Exit" }) {
-			System.out.println(line);
+		if (controller.hasLost()) {
+			for (String line : new String[] { "", "You lost :(", "Press R to restart", "or DELETE to exit" }) {
+				System.out.println(line);
+			}
+		} else {
+
+			if (controller.hasWon()) {
+				for (String line : new String[] { "", "You won :D", "Press R to restart", "or DELETE to exit" }) {
+					System.out.println(line);
+				}
+			}
+
+			for (String line : new String[] { "", "=== CONTROLS ===", "W / UP - Move Up", "S / DOWN - Move Down",
+					"A / LEFT - Move Left", "D / RIGHT - Move Right", "R - Restart", "DELETE - Exit" }) {
+				System.out.println(line);
+			}
 		}
 
 	}
