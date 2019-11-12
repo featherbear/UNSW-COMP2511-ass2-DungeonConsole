@@ -10,6 +10,7 @@ import unsw.dungeon.entity.Sword;
 import unsw.dungeon.entity.Treasure;
 import unsw.dungeon.entity.Wall;
 import unsw.dungeon.entity.meta.Entity;
+import unsw.dungeon.entity.meta.EntityLevel;
 
 public class GameController {
 	private DungeonLoader loader;
@@ -71,15 +72,19 @@ public class GameController {
 			}
 		}
 
-		for (Entity e : dungeon.getEntities()) {
-			if (!e.getVisibility()) {
-				continue;
+		for (EntityLevel entityLevel : EntityLevel.values()) {
+			for (Entity e : Entity.filter(dungeon.getEntities(), entityLevel)) {
+				if (view[e.getY()][e.getX()] != ' ') {
+					continue;
+				}
+
+				if (!e.getVisibility()) {
+					continue;
+				}
+
+				view[e.getY()][e.getX()] = entityToChar(e);
 			}
-
-			view[e.getY()][e.getX()] = entityToChar(e);
 		}
-
-		view[player.getY()][player.getX()] = entityToChar(player);
 
 		return view;
 	}
