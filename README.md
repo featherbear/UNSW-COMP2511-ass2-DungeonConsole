@@ -5,9 +5,9 @@ DungeonConsole
 
 ## Demo
 
-![](demo_advanced.gif)
-
-![](demo_boulders.gif)
+| &nbsp; | &nbsp; |
+|:------:|:------:|
+|![](demo_advanced.gif)|![](demo_boulders.gif)|
 
 ## Download
 
