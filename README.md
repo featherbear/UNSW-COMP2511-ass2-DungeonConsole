@@ -4,7 +4,7 @@ DungeonConsole
 [DungeonConsole.jar]: https://github.com/featherbear/UNSW-COMP2511-ass2-DungeonConsole/releases/latest/download/DungeonConsole.jar
 
 > Imagine being given an assignment that requires a JavaFX GUI but your home computer is only a thin client to a headless server.  
-X11/Xvfb is broken so you can't get a VNC / X display session, and you <s>can't be bothered</s> don't know how to fix it without completely reinstalling your server.  
+X11/Xvfb is broken so you can't get a VNC / X display session, and you <s>don't know how to fix it without completely reinstalling your server.</s> can't be bothered to fix it.  
 Instead of fixing the problem, you decide to implement a UI that is purely text-based.  
 &nbsp;  
 Well lucky that's not me! But alas here I have made a text-based frontend for the UNSW COMP2511 Dungeon Assignment.
