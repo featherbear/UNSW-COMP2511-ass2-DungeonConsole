@@ -3,9 +3,15 @@ DungeonConsole
 
 [DungeonConsole.jar]: https://github.com/featherbear/UNSW-COMP2511-ass2-DungeonConsole/releases/latest/download/DungeonConsole.jar
 
+## Demo
+
+![](demo_advanced.gif)
+
+![](demo_boulders.gif)
+
 ## Download
 
-[DungeonConsole.jar]
+Available here: [DungeonConsole.jar]
 
 ---
 
