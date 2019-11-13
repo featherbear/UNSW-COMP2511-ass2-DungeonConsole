@@ -5,7 +5,7 @@ DungeonConsole
 
 ## Demo
 
-| &nbsp; | &nbsp; |
+| advanced.json | boulders.json |
 |:------:|:------:|
 |![](demo_advanced.gif)|![](demo_boulders.gif)|
 
