@@ -56,7 +56,9 @@ public class GameController {
 		} else if (e instanceof Key) {
 			return 'K';
 		} else if (e instanceof Door) {
-			if (!((Door) e).getOpen()) {
+			if (((Door) e).getOpen()) {
+				return ' ';
+			} else {
 				return '\u29BC';
 			}
 		} else if (e instanceof Exit) {
