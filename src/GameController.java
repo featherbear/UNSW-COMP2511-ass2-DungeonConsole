@@ -10,6 +10,7 @@ import unsw.dungeon.entity.InvincibilityPotion;
 import unsw.dungeon.entity.Key;
 import unsw.dungeon.entity.Player;
 import unsw.dungeon.entity.Portal;
+import unsw.dungeon.entity.Saw;
 import unsw.dungeon.entity.Switch;
 import unsw.dungeon.entity.Sword;
 import unsw.dungeon.entity.Treasure;
@@ -60,8 +61,10 @@ public class GameController {
 			}
 		} else if (e instanceof Exit) {
 			return '\u00d8';
+		} else if (e instanceof Saw) {
+			return '*';
 		}
-		return backgroundTile;
+		return '?';
 	}
 
 	public void initialise() {
