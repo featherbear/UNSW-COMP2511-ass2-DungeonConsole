@@ -96,12 +96,14 @@ public class DungeonConsole {
 			for (String line : new String[] { "", "You lost :(", "Press R to restart", "or DELETE to exit" }) {
 				System.out.println(line);
 			}
+			return;
 		} else {
 
 			if (controller.hasWon()) {
 				for (String line : new String[] { "", "You won :D", "Press R to restart", "or DELETE to exit" }) {
 					System.out.println(line);
 				}
+				return;
 			}
 
 			for (String line : new String[] { "", "=== CONTROLS ===", "W / UP - Move Up", "S / DOWN - Move Down",

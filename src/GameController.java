@@ -93,18 +93,30 @@ public class GameController {
 	}
 
 	public void moveUp() {
+		if (this.hasWon || this.hasLost) {
+			return;
+		}
 		player.moveUp();
 	}
 
 	public void moveRight() {
+		if (this.hasWon || this.hasLost) {
+			return;
+		}
 		player.moveRight();
 	}
 
 	public void moveDown() {
+		if (this.hasWon || this.hasLost) {
+			return;
+		}
 		player.moveDown();
 	}
 
 	public void moveLeft() {
+		if (this.hasWon || this.hasLost) {
+			return;
+		}
 		player.moveLeft();
 	}
 
